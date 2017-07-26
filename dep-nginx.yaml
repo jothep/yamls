@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    run: nginx
+  name: nginx
+  namespace: t0001
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - image: daocloud.io/library/nginx
+        imagePullPolicy: Always
+        name: nginx
+        ports:
+          - containerPort: 80
+            name: "htps"
