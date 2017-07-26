@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: dcentos
+  labels:
+    app: dcentos
+spec:
+  replicas: 1
+  selector:
+    app: dcentos
+  template:
+    metadata:
+      name: dcentos
+      labels:
+        app: dcentos
+    spec:
+      containers:
+      - image: centos-nt
+        stdin: true
+        tty: true
+        command:
+          - bash
+        imagePullPolicy: IfNotPresent
+        name: docker-centos
+      restartPolicy: Always
