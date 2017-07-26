@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - /hyperkube 
+    - apiserver
+    - --admission-control=NamespaceLifecycle,LimitRanger,PersistentVolumeLabel,DefaultStorageClass,ResourceQuota
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --allow-privileged=true
+    - --insecure-bind-address=0.0.0.0
+    - --etcd-servers=http://172.16.7.39:2379,http://172.16.7.40:2379,http://172.16.7.55:2379
+    - --logtostderr=false 
+    - --log-dir=/var/log/kubernetes
+    image: gcr.io/google_containers/hyperkube:v1.5.7
+    name: kube-apiserver
+    volumeMounts:
+    - name: vol
+      mountPath: /var/log/kubernetes
+  volumes:
+  - name: vol
+    hostPath:
+      path: /var/log/kubernetes
+  hostNetwork: true
