@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: busybox0
+  labels:
+    app: busybox0
+spec:
+  template:
+    metadata:
+      name: busybox0
+      labels:
+        app: busybox0
+    spec:
+      containers:
+      - image: dockerhub.xinzhentech.com/busybox
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "300m"
+          limits:
+            memory: "500M"
+            cpu: "300m"
+        command:
+          - sleep
+          - "36000"
+        imagePullPolicy: IfNotPresent
+        name: busybox
+      imagePullSecrets:
+      - name: xinzhen-dockerhub
+      restartPolicy: Always
